@@ -42,8 +42,8 @@ export const AddClinic = () => {
 	const onSubmit = async (data: FormValues) => {
 		await create(data.name);
 		toast({
-			title: 'Clinic added',
-			description: `${data.name} has been successfully added.`,
+			title: 'Clínica adicionada',
+			description: `${data.name} criada com sucesso.`,
 		});
 		setIsDialogOpen(false);
 		methods.reset();
