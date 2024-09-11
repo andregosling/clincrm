@@ -153,7 +153,7 @@ export const useClinicUser = (data: Clinic) => {
 		});
 	};
 
-	return { add, remove, setPermissions };
+	return { add, setPermissions };
 };
 
 export const useClinicPermissions = (clinic: Clinic) => {
