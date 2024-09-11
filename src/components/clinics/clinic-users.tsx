@@ -26,7 +26,7 @@ export const ClinicUsers = ({ data }: { data: Clinic }) => {
 	const { setPermissions } = useClinicUser(data);
 
 	const { userHasPermission } = useClinicPermissions(data);
-
+	//
 	return (
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
