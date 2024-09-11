@@ -1,0 +1,48 @@
+rules_version = '2';
+
+service cloud.firestore {
+   match /databases/{database}/documents {
+     match /companies/{company} {
+        function isSignedIn() {
+          return request.auth != null;
+        }
+
+        function getRole(rsc) {
+          let a = debug(rsc);
+          return rsc.data.users[request.auth.uid].role;
+        }
+
+        function isOneOfRoles(rsc, array) {
+          // Determine if the user is one of an array of roles
+          return isSignedIn() && (getRole(rsc) in array);
+        }
+
+        // Owners can read, write, and delete stories
+        allow write: if isSignedIn() 
+        allow read: if isOneOfRoles(resource, ['admin', 'doctor','employee'])
+        allow update: if isOneOfRoles(resource, ['admin']);
+      
+        match /tasks/{taskId} {
+          function hasPermissionInCompany(array) {
+            return isSignedIn() && (getRole(get(/databases/$(database)/documents/companies/$(resource.data.clinicId))) in array)
+          }
+
+          allow read: if hasPermissionInCompany(['admin', 'doctor','employee'])
+          allow update: if hasPermissionInCompany(['admin', 'doctor'])
+          allow delete: if hasPermissionInCompany(['admin'])
+          allow create: if isSignedIn()
+        }
+
+        match /patients/{patientId} {
+          function hasPermissionInCompany(array) {
+            return isSignedIn() && (getRole(get(/databases/$(database)/documents/companies/$(resource.data.clinicId))) in array)
+          }
+
+          allow read: if hasPermissionInCompany(['admin', 'doctor','employee'])
+          allow update: if hasPermissionInCompany(['admin', 'doctor'])
+          allow delete: if hasPermissionInCompany(['admin'])
+          allow create: if isSignedIn()
+        }
+     }
+   }
+}
