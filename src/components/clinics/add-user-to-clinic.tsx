@@ -40,7 +40,13 @@ const schema = z.object({
 
 type FormValues = Omit<z.infer<typeof schema>, 'role'> & { role: ClinicUserRole };
 
-export const AddUserToClinic = ({ data }: { data: Clinic }) => {
+export const AddUserToClinic = ({
+	data,
+	refreshData,
+}: {
+	data: Clinic;
+	refreshData: () => void;
+}) => {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const { toast } = useToast();
 
@@ -55,11 +61,17 @@ export const AddUserToClinic = ({ data }: { data: Clinic }) => {
 	const { add } = useClinicUser(data);
 
 	const onSubmit = async (data: FormValues) => {
-		await add(data.email, data.role);
+		const result = await add(data.email, data.role);
+
+		if (result === 'invalid-user') {
+			methods.setError('email', { message: 'Email inexistente' });
+			return;
+		}
 		toast({
 			title: 'Usuário adicionado',
 			description: `${data.email} foi adicionado com sucesso à clínica como ${data.role}.`,
 		});
+		refreshData();
 		setIsDialogOpen(false);
 		methods.reset();
 	};

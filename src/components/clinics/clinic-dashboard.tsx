@@ -7,7 +7,7 @@ import { ClinicUsers } from './clinic-users';
 
 export const ClinicDashboard = () => {
 	const { clinicId } = useParams();
-	const { data } = useClinic(clinicId!);
+	const { data, refreshData } = useClinic(clinicId!);
 
 	if (!data) return null;
 
@@ -42,7 +42,7 @@ export const ClinicDashboard = () => {
 
 			<Tasks />
 
-			<ClinicUsers data={data} />
+			<ClinicUsers data={data} refreshData={refreshData} />
 		</div>
 	);
 };

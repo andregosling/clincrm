@@ -57,38 +57,40 @@ export const useClinic = (clinicId: string) => {
 	const [isLoading, setLoading] = useState(true);
 	const { user } = useUser();
 
-	useEffect(() => {
+	const refreshData = async () => {
 		if (!user || !clinicId) return;
 
-		(async () => {
-			const clinicRef = doc(db, 'companies', clinicId);
-			try {
-				const clinicSnapshot = await getDoc(clinicRef);
+		const clinicRef = doc(db, 'companies', clinicId);
+		try {
+			const clinicSnapshot = await getDoc(clinicRef);
 
-				if (clinicSnapshot.exists()) {
-					const clinicData = clinicSnapshot.data() as Omit<Clinic, 'id'>;
+			if (clinicSnapshot.exists()) {
+				const clinicData = clinicSnapshot.data() as Omit<Clinic, 'id'>;
 
-					if (
-						clinicData.users[user.uid] &&
-						Object.values(ClinicUserRole).includes(clinicData.users[user.uid].role)
-					) {
-						setData({
-							id: clinicSnapshot.id,
-							...clinicData,
-							userRole: clinicData.users[user.uid].role,
-						});
-					}
+				if (
+					clinicData.users[user.uid] &&
+					Object.values(ClinicUserRole).includes(clinicData.users[user.uid].role)
+				) {
+					setData({
+						id: clinicSnapshot.id,
+						...clinicData,
+						userRole: clinicData.users[user.uid].role,
+					});
 				}
-
-				setLoading(false);
-			} catch (error) {
-				console.error('Error fetching clinic data:', error);
-				setLoading(false);
 			}
-		})();
+
+			setLoading(false);
+		} catch (error) {
+			console.error('Error fetching clinic data:', error);
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		refreshData();
 	}, [user, clinicId]);
 
-	return { data, isLoading };
+	return { data, isLoading, refreshData };
 };
 
 export const useCreateClinic = () => {
@@ -122,22 +124,26 @@ export const useClinicUser = (data: Clinic) => {
 	const add = async (email: string, role: ClinicUserRole) => {
 		if (!user) return;
 
-		const userUid = await fetch(
-			`${import.meta.env.VITE_FUNCTIONS_URL}/api/userIdByEmail?email=${email}`,
-		);
+		try {
+			const userUid = await fetch(
+				`${import.meta.env.VITE_FUNCTIONS_URL}/api/userIdByEmail?email=${email}`,
+			);
 
-		const { uid } = await userUid.json();
+			const { uid } = await userUid.json();
 
-		await updateDoc(companyRef, <Clinic>{
-			...data,
-			users: <Clinic['users']>{
-				...data.users,
-				[uid]: {
-					email,
-					role,
+			await updateDoc(companyRef, <Clinic>{
+				...data,
+				users: <Clinic['users']>{
+					...data.users,
+					[uid]: {
+						email,
+						role,
+					},
 				},
-			},
-		});
+			});
+		} catch {
+			return 'invalid-user';
+		}
 	};
 
 	const setPermissions = async (id: string, permission: ClinicUserRole) => {

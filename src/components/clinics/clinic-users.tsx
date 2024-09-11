@@ -20,7 +20,13 @@ import {
 import { AddUserToClinic } from './add-user-to-clinic';
 import { roleData } from './clinic-listing';
 
-export const ClinicUsers = ({ data }: { data: Clinic }) => {
+export const ClinicUsers = ({
+	data,
+	refreshData,
+}: {
+	data: Clinic;
+	refreshData: () => void;
+}) => {
 	const { user: currentUser } = useUser();
 
 	const { setPermissions } = useClinicUser(data);
@@ -31,7 +37,9 @@ export const ClinicUsers = ({ data }: { data: Clinic }) => {
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle>Pessoas na clínica</CardTitle>
-				{userHasPermission(ClinicUserRole.Admin) && <AddUserToClinic data={data} />}
+				{userHasPermission(ClinicUserRole.Admin) && (
+					<AddUserToClinic refreshData={refreshData} data={data} />
+				)}
 			</CardHeader>
 			<CardContent>
 				<Table>
