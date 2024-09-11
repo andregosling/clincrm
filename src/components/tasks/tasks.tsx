@@ -67,7 +67,7 @@ export const Tasks = () => {
 	return (
 		<Card className="mb-6">
 			<CardHeader className="flex flex-row items-center justify-between">
-				<CardTitle>Tasks</CardTitle>
+				<CardTitle>Tarefas</CardTitle>
 				<Dialog
 					open={!!mode}
 					onOpenChange={(open) => (open ? setMode('creating') : setMode(undefined))}>
@@ -83,12 +83,12 @@ export const Tasks = () => {
 									limitDate: '',
 								});
 							}}>
-							<PlusIcon className="mr-2 h-4 w-4 " /> Add Task
+							<PlusIcon className="mr-2 h-4 w-4 " /> Adicionar tarefa
 						</Button>
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle className="text-gray-900">Add New Task</DialogTitle>
+							<DialogTitle className="text-gray-900">Criar nova tarefa</DialogTitle>
 						</DialogHeader>
 						<Form {...methods}>
 							<form
@@ -101,7 +101,7 @@ export const Tasks = () => {
 
 									setMode(undefined);
 								})}
-								className="space-y-4 text-gray-900 contents">
+								className="space-y-4 text-gray-900 contents text-start items-start">
 								<InputField control={methods.control} name="title" label="Título" />
 								<InputField
 									control={methods.control}
@@ -136,8 +136,11 @@ export const Tasks = () => {
 											: []
 									}
 								/>
-								<CustomButton type="submit" loading={isSubmitting}>
-									{mode === 'creating' ? 'Criar' : 'Editar'} task
+								<CustomButton
+									type="submit"
+									className="bg-blue-600 hover:bg-blue-700"
+									loading={isSubmitting}>
+									{mode === 'creating' ? 'Criar' : 'Editar'} tarefa
 								</CustomButton>
 							</form>
 						</Form>
@@ -198,15 +201,21 @@ export const Tasks = () => {
 					<TableBody>
 						{data?.map((task) => (
 							<TableRow key={task.id}>
-								<TableCell>{task.title}</TableCell>
-								<TableCell>{task.description}</TableCell>
-								<TableCell>{new Date(task.date_created).toLocaleDateString()}</TableCell>
-								<TableCell>{new Date(task.date_limit).toLocaleDateString()}</TableCell>
-								<TableCell>
+								<TableCell className="text-start">{task.title}</TableCell>
+								<TableCell className="text-start">{task.description}</TableCell>
+								<TableCell className="text-start">
+									{new Date(task.date_created).toLocaleDateString()}
+								</TableCell>
+								<TableCell className="text-start">
+									{new Date(task.date_limit).toLocaleDateString()}
+								</TableCell>
+								<TableCell className="text-start">
 									{task.status === TaskStatus.Done ? 'Concluído' : 'Pendente'}
 								</TableCell>
-								<TableCell>{clinic?.users[task.assigned].email}</TableCell>
-								<TableCell>
+								<TableCell className="text-start">
+									{clinic?.users[task.assigned].email}
+								</TableCell>
+								<TableCell className="text-start">
 									{userHasPermission(ClinicUserRole.Doctor) && (
 										<CustomButton
 											variant="outline"

@@ -17,20 +17,22 @@ export const ClinicDashboard = () => {
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 				<Card>
-					<CardHeader>
-						<CardTitle>Total People</CardTitle>
+					<CardHeader className="items-start">
+						<CardTitle>Pessoas</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<p className="text-4xl font-bold">{Object.keys(data.users).length}</p>
+						<p className="text-4xl font-bold text-start">
+							{Object.keys(data.users).length}
+						</p>
 					</CardContent>
 				</Card>
 				<Card>
-					<CardHeader>
+					<CardHeader className="items-start">
 						<CardTitle>Pacientes</CardTitle>
 					</CardHeader>
-					<CardContent>
+					<CardContent className="items-start flex">
 						<Link to="patients">
-							<CustomButton className="bg-blue-600 hover:bg-blue-700">
+							<CustomButton className="bg-blue-600 hover:bg-blue-700 items-start">
 								Visualizar
 							</CustomButton>
 						</Link>

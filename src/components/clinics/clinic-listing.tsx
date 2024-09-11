@@ -21,13 +21,13 @@ export const ClinicListing = () => {
 				<h1 className="text-2xl font-bold text-gray-800">Minhas clínicas</h1>
 				<AddClinic />
 			</div>
-			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 ">
 				{data?.map((clinic) => (
 					<Link to={clinic.id}>
 						<Card
 							key={clinic.id}
-							className="cursor-pointer hover:shadow-lg transition-shadow duration-300">
-							<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+							className="cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col items-start">
+							<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-full">
 								<CardTitle className="text-sm font-medium">{clinic.name}</CardTitle>
 								<ChevronRight className="h-4 w-4 text-muted-foreground" />
 							</CardHeader>

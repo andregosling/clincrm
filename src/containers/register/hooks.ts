@@ -54,7 +54,7 @@ export const useRegisterForm = () => {
 				displayName: values.name,
 			});
 
-			navigation('/dashboard');
+			navigation('/clinics');
 			setUser(user);
 		} catch (error: unknown) {
 			if (error instanceof FirebaseError) {

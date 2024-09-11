@@ -1,23 +1,19 @@
 import { Button } from '@/components/ui/button';
-import { useUser } from '@/core/contexts/user';
 import { auth } from '@/core/services/firebase/client';
 import { ExitIcon } from '@radix-ui/react-icons';
 import { signOut } from 'firebase/auth';
-import { ChevronLeft, Home, Settings, Stethoscope, Users } from 'lucide-react';
+import { ChevronLeft, Settings, Stethoscope } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const menuItems = [
-	{ name: 'Home', href: '/', icon: Home },
-	{ name: 'Clinics', href: '/clinics', icon: Stethoscope },
-	{ name: 'Patients', href: '/patients', icon: Users },
-	{ name: 'Settings', href: '/settings', icon: Settings },
+	{ name: 'Clínicas', href: '/clinics', icon: Stethoscope },
+	{ name: 'Configuracões', href: '/settings', icon: Settings },
 ];
 
 export default function UpdatedLayout({ children }: { children?: React.ReactNode }) {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 	const navigate = useNavigate();
-	const { user } = useUser();
 
 	const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 

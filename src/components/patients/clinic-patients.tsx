@@ -94,8 +94,11 @@ export const ClinicPatients = () => {
 									label="Resumo do histórico"
 								/>
 
-								<CustomButton type="submit" loading={isSubmitting}>
-									{mode === 'creating' ? 'Criar' : 'Editar'} task
+								<CustomButton
+									type="submit"
+									className="bg-blue-600 hover:bg-blue-700"
+									loading={isSubmitting}>
+									{mode === 'creating' ? 'Criar' : 'Editar'} paciente
 								</CustomButton>
 							</form>
 						</Form>
@@ -113,8 +116,8 @@ export const ClinicPatients = () => {
 					<TableBody>
 						{data?.map((patient) => (
 							<TableRow>
-								<TableCell>{patient.name}</TableCell>
-								<TableCell>{patient.contact}</TableCell>
+								<TableCell className="text-start">{patient.name}</TableCell>
+								<TableCell className="text-start">{patient.contact}</TableCell>
 
 								<TableCell>
 									{userHasPermission(ClinicUserRole.Doctor) && (

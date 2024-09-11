@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useClinicUser } from '@/containers/company/hooks';
+import { useClinicPermissions, useClinicUser } from '@/containers/company/hooks';
 import { Clinic, ClinicUserRole } from '@/containers/company/types';
 import { useUser } from '@/core/contexts/user';
 import {
@@ -24,14 +24,14 @@ export const ClinicUsers = ({ data }: { data: Clinic }) => {
 	const { user: currentUser } = useUser();
 
 	const { setPermissions } = useClinicUser(data);
-	const userRole = data.userRole,
-		isAdmin = userRole === ClinicUserRole.Admin;
+
+	const { userHasPermission } = useClinicPermissions(data);
 
 	return (
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
-				<CardTitle>People in the Clinic</CardTitle>
-				{isAdmin && <AddUserToClinic data={data} />}
+				<CardTitle>Pessoas na clínica</CardTitle>
+				{userHasPermission(ClinicUserRole.Admin) && <AddUserToClinic data={data} />}
 			</CardHeader>
 			<CardContent>
 				<Table>
@@ -44,11 +44,10 @@ export const ClinicUsers = ({ data }: { data: Clinic }) => {
 					<TableBody>
 						{Object.entries(data.users).map(([user, { email, role }]) => (
 							<TableRow key={user}>
-								<TableCell className="font-medium">{email}</TableCell>
-								<TableCell className="w-48">
-									{' '}
-									{/* Fixed width */}
-									{isAdmin && user !== currentUser?.uid ? (
+								<TableCell className="font-medium text-start">{email}</TableCell>
+								<TableCell className="w-48 text-start">
+									{userHasPermission(ClinicUserRole.Admin) &&
+									user !== currentUser?.uid ? (
 										<div className="relative">
 											<Select
 												defaultValue={role}

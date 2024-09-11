@@ -33,7 +33,7 @@ export const useLoginForm = () => {
 			);
 
 			setUser(user);
-			navigate('/dashboard');
+			navigate('/clinics');
 		} catch (error: unknown) {
 			if (error instanceof FirebaseError) {
 				const errorCode = error.code;

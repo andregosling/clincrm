@@ -37,7 +37,7 @@ export const InputField = <T extends FieldValues>({
 			name={name}
 			render={({ field }) => (
 				<FormItem className="w-full flex flex-col">
-					<FormLabel>{label}</FormLabel>
+					<FormLabel className="text-start">{label}</FormLabel>
 					<FormControl>
 						<div className="relative w-full flex flex-col">
 							<Input

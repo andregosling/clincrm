@@ -10,7 +10,6 @@ import './index.css';
 import { ClinicPage } from './pages/clinics/clinic';
 import { ClinicPatientsPage } from './pages/clinics/clinic-patients';
 import { ClinicsPage } from './pages/clinics/clinics';
-import { DashboardPage } from './pages/dashboard';
 import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { UserSettingsPage } from './pages/settings';
@@ -27,13 +26,6 @@ export const routes: Route[] = [
 	{ path: '/', label: 'Login', element: <App /> },
 	{ path: '/login', label: 'Login', element: <LoginPage /> },
 	{ path: '/register', label: 'Registrar', element: <RegisterPage /> },
-	{
-		path: '/dashboard',
-		label: 'Painel',
-		withLayout: true,
-		protected: true,
-		element: <DashboardPage />,
-	},
 	{
 		path: '/clinics',
 		label: 'Clínicas',

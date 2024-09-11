@@ -25,22 +25,19 @@ export const UserSettings = () => {
 
 	return (
 		<div className="flex h-screen bg-gray-100">
-			{/* Sidebar remains unchanged */}
-
-			{/* Main content */}
 			<main className="flex-1 p-8 overflow-y-auto text-start">
 				<div className="max-w-3xl mx-auto">
 					<Card>
 						<CardHeader>
-							<CardTitle>User Profile</CardTitle>
+							<CardTitle>Perfil do usuário</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<Form {...form}>
 								<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-									<InputField control={form.control} name="name" label="Name" />
+									<InputField control={form.control} name="name" label="Nome" />
 									<div className="flex justify-start space-x-2">
 										<CustomButton type="submit" loading={isSubmitting}>
-											Save Changes
+											Salvar
 										</CustomButton>
 									</div>
 								</form>

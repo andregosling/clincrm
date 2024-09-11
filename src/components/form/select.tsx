@@ -45,7 +45,7 @@ export const SelectField = <D extends FieldValues>({
 			name={name}
 			render={({ field }) => (
 				<FormItem className={`${className} flex flex-col h-full`}>
-					{label && <FormLabel>{label}</FormLabel>}
+					{label && <FormLabel className="text-start">{label}</FormLabel>}
 
 					<Select onValueChange={field.onChange} value={field.value}>
 						<FormControl>

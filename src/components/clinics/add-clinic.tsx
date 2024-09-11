@@ -53,7 +53,7 @@ export const AddClinic = () => {
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 			<DialogTrigger asChild>
 				<Button className="bg-blue-600 hover:bg-blue-700 text-white">
-					<PlusCircle className="mr-2 h-4 w-4" /> Add Clinic
+					<PlusCircle className="mr-2 h-4 w-4" /> Adicionar clínica
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">

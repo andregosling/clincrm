@@ -79,9 +79,6 @@ export const LoginPage = () => {
 						</Form>
 					</CardContent>
 					<CardFooter className="flex flex-col items-center space-y-2">
-						<a href="#" className="text-sm text-blue-600 hover:underline">
-							Esqueceu sua senha?
-						</a>
 						<div className="text-sm text-gray-600">
 							Ainda não tem uma conta?{' '}
 							<Link to="/register" className="text-blue-600 hover:underline">
