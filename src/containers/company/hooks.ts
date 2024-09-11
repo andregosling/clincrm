@@ -122,7 +122,9 @@ export const useClinicUser = (data: Clinic) => {
 	const add = async (email: string, role: ClinicUserRole) => {
 		if (!user) return;
 
-		const userUid = await fetch(`http://localhost:3000/api/userIdByEmail?email=${email}`);
+		const userUid = await fetch(
+			`${import.meta.env.VITE_FUNCTIONS_URL}/api/userIdByEmail?email=${email}`,
+		);
 
 		const { uid } = await userUid.json();
 
@@ -137,8 +139,6 @@ export const useClinicUser = (data: Clinic) => {
 			},
 		});
 	};
-
-	const remove = async (id: string) => {};
 
 	const setPermissions = async (id: string, permission: ClinicUserRole) => {
 		await updateDoc(companyRef, <Clinic>{
