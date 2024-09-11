@@ -1,10 +1,4 @@
 {
-	"routes": [
-		{
-			"src": "/(.*).html",
-			"dest": "/index.html"
-		}
-	],
 	"headers": [
 		{
 			"source": "/(.*).(html|js|css)",
